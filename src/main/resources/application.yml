@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: hoang-tour-api
+
+springdoc:
+  swagger-ui:
+    path: /
+    tags-sorter: alpha

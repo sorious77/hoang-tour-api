@@ -1,5 +1,6 @@
-package com.hoang.hoangtourapi.model.entity
+package com.hoang.hoangtourapi.domain.stationline.model
 
+import com.hoang.hoangtourapi.common.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
@@ -12,5 +13,5 @@ data class StationLine(
     @Column(name = "STATION_ID", nullable = false)
     var stationId: Long,
     @Column(name = "LINE_ID", nullable = false)
-    var lineId: Long
+    var lineId: Long,
 ) : BaseEntity()

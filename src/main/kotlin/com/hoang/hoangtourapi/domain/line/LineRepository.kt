@@ -1,6 +1,6 @@
-package com.hoang.hoangtourapi.repository
+package com.hoang.hoangtourapi.domain.line
 
-import com.hoang.hoangtourapi.model.entity.Line
+import com.hoang.hoangtourapi.domain.line.model.Line
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

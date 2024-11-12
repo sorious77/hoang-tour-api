@@ -1,4 +1,4 @@
-package com.hoang.hoangtourapi.model.dto
+package com.hoang.hoangtourapi.domain.station.model
 
 data class StationDto(
     val stationId: Long,
@@ -8,10 +8,5 @@ data class StationDto(
     val longitude: Double,
     val description: String,
     var lineNameList: List<String>?,
-    var lineColor: String?
-)
-
-data class LineReq(
-    val lineName: String,
-    val lineEngName: String,
+    var lineColor: String?,
 )

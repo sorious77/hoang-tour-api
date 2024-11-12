@@ -1,4 +1,4 @@
-package com.hoang.hoangtourapi.model.entity
+package com.hoang.hoangtourapi.domain.member.model
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -11,5 +11,5 @@ data class Member(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val memberId: Long,
     val name: String,
-    val email: String
+    val email: String,
 )

@@ -1,4 +1,4 @@
-package com.hoang.hoangtourapi.model.entity
+package com.hoang.hoangtourapi.common
 
 import jakarta.persistence.Column
 import jakarta.persistence.EntityListeners

@@ -1,5 +1,6 @@
-package com.hoang.hoangtourapi.model.entity
+package com.hoang.hoangtourapi.domain.line.model
 
+import com.hoang.hoangtourapi.common.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue

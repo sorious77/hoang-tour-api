@@ -1,5 +1,6 @@
-package com.hoang.hoangtourapi.model.entity
+package com.hoang.hoangtourapi.domain.station.model
 
+import com.hoang.hoangtourapi.common.BaseEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -20,5 +21,5 @@ data class Station(
     @Column(name = "LONGITUDE", nullable = false)
     val longitude: Double,
     @Column(name = "DESCRIPTION", nullable = true)
-    val description: String
+    val description: String,
 ) : BaseEntity()

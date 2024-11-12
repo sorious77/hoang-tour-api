@@ -1,15 +1,13 @@
-package com.hoang.hoangtourapi.service
+package com.hoang.hoangtourapi.domain.line
 
-import com.hoang.hoangtourapi.mapper.LineMapper
-import com.hoang.hoangtourapi.model.dto.LineRes
-import com.hoang.hoangtourapi.model.entity.Line
-import com.hoang.hoangtourapi.repository.LineRepository
+import com.hoang.hoangtourapi.domain.line.model.Line
+import com.hoang.hoangtourapi.domain.line.model.LineRes
 import org.springframework.stereotype.Service
 
 @Service
 class LineService(
     private val lineRepository: LineRepository,
-    private val lineMapper: LineMapper
+    private val lineMapper: LineMapper,
 ) {
     // 호선 목록 반환
     fun getLineList(): List<LineRes> {

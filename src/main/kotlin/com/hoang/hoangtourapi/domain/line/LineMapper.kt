@@ -1,14 +1,14 @@
-package com.hoang.hoangtourapi.mapper
+package com.hoang.hoangtourapi.domain.line
 
-import com.hoang.hoangtourapi.model.dto.LineReq
-import com.hoang.hoangtourapi.model.dto.LineRes
-import com.hoang.hoangtourapi.model.entity.Line
+import com.hoang.hoangtourapi.domain.line.model.Line
+import com.hoang.hoangtourapi.domain.line.model.LineReq
+import com.hoang.hoangtourapi.domain.line.model.LineRes
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 import org.mapstruct.Mappings
 
 @Mapper(
-    componentModel = "spring"
+    componentModel = "spring",
 )
 interface LineMapper {
     @Mappings(

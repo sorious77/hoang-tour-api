@@ -1,4 +1,4 @@
-package com.hoang.hoangtourapi.model
+package com.hoang.hoangtourapi.model.entity
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue

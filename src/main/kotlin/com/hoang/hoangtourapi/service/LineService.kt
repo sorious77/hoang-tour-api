@@ -2,6 +2,7 @@ package com.hoang.hoangtourapi.service
 
 import com.hoang.hoangtourapi.mapper.LineMapper
 import com.hoang.hoangtourapi.model.dto.LineRes
+import com.hoang.hoangtourapi.model.entity.Line
 import com.hoang.hoangtourapi.repository.LineRepository
 import org.springframework.stereotype.Service
 
@@ -15,5 +16,9 @@ class LineService(
         val lineList = lineRepository.findAll()
 
         return lineList.map { lineMapper.toRes(it) }
+    }
+
+    fun getLineListByLineIdList(lineIdList: List<Long>): List<Line> {
+        return lineRepository.findLineByLineIdIn(lineIdList)
     }
 }

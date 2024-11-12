@@ -18,5 +18,5 @@ data class Line(
     @Column(name = "LINE_ENG_NAME", nullable = false)
     var lineEngName: String,
     @Column(name = "LINE_COLOR", nullable = true)
-    var lineColor: String,
+    var lineColor: String?,
 ) : BaseEntity()

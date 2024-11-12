@@ -9,6 +9,9 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 logging:
   level:

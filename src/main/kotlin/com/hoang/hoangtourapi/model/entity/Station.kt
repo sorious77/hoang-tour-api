@@ -21,26 +21,4 @@ data class Station(
     val longitude: Double,
     @Column(name = "DESCRIPTION", nullable = true)
     val description: String
-): BaseEntity()
-
-@Entity(name = "STATION_LINES")
-data class StationLine(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "STATION_LINE_ID", nullable = false)
-    var stationLineId: Long? = 0L,
-    @Column(name = "STATION_ID", nullable = false)
-    var stationId: Long,
-    @Column(name = "LINE_ID", nullable = false)
-    var lineId: Long
-)
-
-@Entity(name = "LINES")
-data class Line(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "LINE_ID", nullable = false)
-    var lineId: Long? = 0L,
-    @Column(name = "LINE_NAME", nullable = false)
-    var lineName: String,
-    @Column(name = "LINE_ENG_NAME", nullable = false)
-    var lineEngName: String,
 ) : BaseEntity()

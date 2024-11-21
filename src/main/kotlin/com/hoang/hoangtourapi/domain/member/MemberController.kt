@@ -5,6 +5,7 @@ import com.hoang.hoangtourapi.domain.member.model.Member
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -13,8 +14,10 @@ class MemberController(
     private val memberService: MemberService,
 ) {
     @GetMapping
-    fun getMember(): List<Member>? {
-        return memberService.findAll()
+    fun getMemberByMemberId(
+        @RequestParam memberId: Long,
+    ): Member? {
+        return memberService.findMemberByMemberId(memberId)
     }
 
     @PostMapping

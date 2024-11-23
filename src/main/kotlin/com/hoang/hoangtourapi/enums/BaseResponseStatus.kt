@@ -6,8 +6,9 @@ enum class BaseResponseStatus(val code: Int, val description: String) {
     /**
      * Business 로직
      */
-    ALREADY_EXISTS(2000, "이미 존재하는 값입니다."),
-    PASSWORD_MISMATCH(2001, "비밀번호와 비밀번호 확인이 일치하지 않습니다."),
+    EMPTY_RESULT(2000, "값이 존재하지 않습니다."),
+    ALREADY_EXISTS(2001, "이미 존재하는 값입니다."),
+    PASSWORD_MISMATCH(2002, "비밀번호와 비밀번호 확인이 일치하지 않습니다."),
 
     /**
      * 서버 에러

@@ -53,6 +53,9 @@ dependencies {
 
     // spring security
     implementation("org.springframework.boot:spring-boot-starter-security")
+
+    // validation
+    implementation("org.springframework.boot:spring-boot-starter-validation")
 }
 
 kotlin {

@@ -16,16 +16,16 @@ import jakarta.persistence.Table
 data class Member(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBER_ID", nullable = false)
-    val memberId: Long,
+    var memberId: Long,
     @Column(name = "EMAIL", nullable = false)
-    val email: String,
+    var email: String,
     @Column(name = "NICKNAME", nullable = false)
-    val nickname: String,
+    var nickname: String,
     @Column(name = "PASSWORD", nullable = false)
-    val password: String,
+    var password: String,
     @Column(name = "INTRODUCTION", nullable = true)
-    val introduction: String? = "",
+    var introduction: String? = "",
     @Enumerated(value = EnumType.STRING)
     @Column(name = "MEMBER_TYPE", nullable = false)
-    val memberType: MemberType = MemberType.BASIC,
+    var memberType: MemberType = MemberType.BASIC,
 ) : BaseEntity()

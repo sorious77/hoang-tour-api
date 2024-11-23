@@ -1,0 +1,24 @@
+package com.hoang.hoangtourapi.enums
+
+enum class BaseResponseStatus(val code: Int, val description: String) {
+    SUCCESS(1000, "요청에 성공했습니다."),
+
+    /**
+     * Business 로직
+     */
+    ALREADY_EXISTS(2000, "이미 존재하는 값입니다."),
+    PASSWORD_MISMATCH(2001, "비밀번호와 비밀번호 확인이 일치하지 않습니다."),
+
+    /**
+     * 서버 에러
+     */
+    SERVER_ERROR(4000, "처리 중 에러가 발생했습니다."),
+    INVALID_INPUT(4001, "올바르지 않은 입력 값입니다."),
+    ;
+
+    companion object {
+        fun fromCode(code: Int): BaseResponseStatus {
+            return entries.firstOrNull { it.code == code } ?: SERVER_ERROR
+        }
+    }
+}

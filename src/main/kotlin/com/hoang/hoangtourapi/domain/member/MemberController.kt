@@ -2,8 +2,10 @@ package com.hoang.hoangtourapi.domain.member
 
 import com.hoang.hoangtourapi.domain.member.model.CreateMemberReq
 import com.hoang.hoangtourapi.domain.member.model.Member
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -21,7 +23,9 @@ class MemberController(
     }
 
     @PostMapping
-    fun createMember(req: CreateMemberReq): Member? {
+    fun createMember(
+        @Valid @RequestBody req: CreateMemberReq,
+    ): Member? {
         return memberService.createMember(req)
     }
 }

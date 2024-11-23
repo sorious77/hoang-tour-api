@@ -16,6 +16,10 @@ import org.mapstruct.NullValueMappingStrategy
 interface MemberMapper {
     @Mappings(
         Mapping(target = "memberType", expression = "java(MemberType.BASIC)"),
+        Mapping(target = "password", source = "encryptedPassword"),
     )
-    fun toEntity(req: CreateMemberReq): Member
+    fun toEntity(
+        req: CreateMemberReq,
+        encryptedPassword: String,
+    ): Member
 }

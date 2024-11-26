@@ -1,9 +1,8 @@
 package com.hoang.hoangtourapi.domain.member
 
 import com.hoang.hoangtourapi.domain.member.model.CreateMemberReq
-import com.hoang.hoangtourapi.domain.member.model.Member
-import com.hoang.hoangtourapi.exception.AlreadyExistsException
-import com.hoang.hoangtourapi.exception.PasswordMismatchException
+import com.hoang.hoangtourapi.enums.BaseResponseStatus
+import com.hoang.hoangtourapi.exception.BaseException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -15,18 +14,17 @@ class MemberService(
 ) {
     fun findMemberByMemberId(memberId: Long) = memberRepository.findMemberByMemberId(memberId)
 
-    fun createMember(req: CreateMemberReq): Member? {
+    fun createMember(req: CreateMemberReq): Boolean {
         // 유효한 입력인지 검증
         validateCreateMember(req)
 
         val encryptedPassword = passwordEncoder.encode(req.password)
 
-        val member =
-            memberRepository.save(
-                memberMapper.toEntity(req, encryptedPassword),
-            )
+        memberRepository.save(
+            memberMapper.toEntity(req, encryptedPassword),
+        )
 
-        return member
+        return true
     }
 
     private fun validateCreateMember(req: CreateMemberReq) {
@@ -34,17 +32,19 @@ class MemberService(
         if (req.email != null &&
             memberRepository.existsByEmail(req.email)
         ) {
-            throw AlreadyExistsException("이메일")
+            throw BaseException(BaseResponseStatus.ALREADY_EXISTS, "이메일")
         }
 
         // 닉네임 중복 검사
         if (req.nickname != null &&
             memberRepository.existsByNickname(req.nickname)
         ) {
-            throw AlreadyExistsException("닉네임")
+            throw BaseException(BaseResponseStatus.ALREADY_EXISTS, "닉네임")
         }
 
         // 비밀번호, 비밀번호 확인 일치 검사
-        if (req.password != req.passwordConfirm) throw PasswordMismatchException()
+        if (req.password != req.passwordConfirm) {
+            throw BaseException(BaseResponseStatus.PASSWORD_MISMATCH)
+        }
     }
 }

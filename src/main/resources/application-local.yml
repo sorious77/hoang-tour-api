@@ -17,3 +17,6 @@ logging:
   level:
     org.hibernate.type.descriptor:
       sql: trace
+
+jwt:
+  secretKey: 1jF6cIqwJBCjgKFFCGOnTZ16xF7gN04U2lhqez9j0CMKrtIJ3JZva2cVlF1KbpryXoGl3mi96Y8+2kvveqp9lQ==

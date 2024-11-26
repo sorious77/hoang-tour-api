@@ -9,6 +9,8 @@ enum class BaseResponseStatus(val code: Int, val description: String) {
     EMPTY_RESULT(2000, "값이 존재하지 않습니다."),
     ALREADY_EXISTS(2001, "이미 존재하는 값입니다."),
     PASSWORD_MISMATCH(2002, "비밀번호와 비밀번호 확인이 일치하지 않습니다."),
+    ENTITY_NOT_FOUND(2003, "존재하지 않는 데이터입니다."),
+    SIGN_IN_FAIL(2004, "로그인에 실패했습니다."),
 
     /**
      * 서버 에러

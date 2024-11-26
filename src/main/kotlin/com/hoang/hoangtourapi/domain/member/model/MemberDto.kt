@@ -15,6 +15,14 @@ data class CreateMemberReq(
     val passwordConfirm: String?,
 )
 
-data class MemberDto(
-    val name: String,
+data class SignInReq(
+    @field:NotEmpty(message = "이메일은 필수값입니다.")
+    val email: String?,
+    @field:NotEmpty(message = "비밀번호는 필수값입니다.")
+    val password: String?,
+)
+
+data class SignInRes(
+    val nickname: String,
+    val token: String,
 )

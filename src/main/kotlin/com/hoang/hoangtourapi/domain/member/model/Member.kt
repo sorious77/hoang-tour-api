@@ -17,9 +17,9 @@ data class Member(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBER_ID", nullable = false)
     var memberId: Long,
-    @Column(name = "EMAIL", nullable = false)
+    @Column(name = "EMAIL", unique = true, nullable = false)
     var email: String,
-    @Column(name = "NICKNAME", nullable = false)
+    @Column(name = "NICKNAME", unique = true, nullable = false)
     var nickname: String,
     @Column(name = "PASSWORD", nullable = false)
     var password: String,

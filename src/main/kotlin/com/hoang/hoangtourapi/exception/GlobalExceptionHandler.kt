@@ -2,6 +2,8 @@ package com.hoang.hoangtourapi.exception
 
 import com.hoang.hoangtourapi.common.BaseResponse
 import com.hoang.hoangtourapi.enums.BaseResponseStatus
+import jakarta.persistence.EntityNotFoundException
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -9,29 +11,43 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 @RestControllerAdvice
 class GlobalExceptionHandler {
     @ExceptionHandler(
-        AlreadyExistsException::class,
+        BaseException::class,
+    )
+    fun handleBaseException(e: BaseException): BaseResponse<Any> {
+        val message =
+            when (e.status) {
+                BaseResponseStatus.ALREADY_EXISTS -> "이미 존재하는 ${e.message}입니다."
+                else -> e.status.description
+            }
+
+        return BaseResponse(
+            e.status.code,
+            message,
+            null,
+        )
+    }
+
+    @ExceptionHandler(
         MethodArgumentNotValidException::class,
-        PasswordMismatchException::class,
+        EntityNotFoundException::class,
+        BadCredentialsException::class,
         Exception::class,
     )
-    fun handleCustomException(e: Exception): BaseResponse<Any> {
+    fun handleException(e: Exception): BaseResponse<Any> {
         val status =
             when (e) {
-                is AlreadyExistsException -> BaseResponseStatus.ALREADY_EXISTS
                 is MethodArgumentNotValidException -> BaseResponseStatus.INVALID_INPUT
-                is PasswordMismatchException -> BaseResponseStatus.PASSWORD_MISMATCH
+                is EntityNotFoundException -> BaseResponseStatus.ENTITY_NOT_FOUND
+                is BadCredentialsException -> BaseResponseStatus.SIGN_IN_FAIL
                 else -> BaseResponseStatus.SERVER_ERROR
             }
 
         val customMessage =
             when (e) {
-                is AlreadyExistsException -> "이미 존재하는 ${e.field}입니다."
-
-                is MethodArgumentNotValidException -> {
+                is MethodArgumentNotValidException ->
                     e.bindingResult.fieldErrors.joinToString(" ") {
                         "[${it.field} - ${it.defaultMessage ?: ""}]"
                     }
-                }
 
                 else -> ""
             }

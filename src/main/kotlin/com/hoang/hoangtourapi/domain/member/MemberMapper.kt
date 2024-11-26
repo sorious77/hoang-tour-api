@@ -2,6 +2,7 @@ package com.hoang.hoangtourapi.domain.member
 
 import com.hoang.hoangtourapi.domain.member.model.CreateMemberReq
 import com.hoang.hoangtourapi.domain.member.model.Member
+import com.hoang.hoangtourapi.domain.member.model.SignInRes
 import com.hoang.hoangtourapi.enums.MemberType
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
@@ -22,4 +23,6 @@ interface MemberMapper {
         req: CreateMemberReq,
         encryptedPassword: String,
     ): Member
+
+    fun toSignInRes(member: Member): SignInRes
 }

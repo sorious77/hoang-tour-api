@@ -44,7 +44,7 @@ class JwtTokenUtil(
         }
     }
 
-    fun getUsernameFromToken(token: String): String {
+    fun getEmail(token: String): String {
         val claims = getClaimsFromToken(token)
         return claims.subject
     }

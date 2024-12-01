@@ -6,3 +6,7 @@ springdoc:
   swagger-ui:
     path: /
     tags-sorter: alpha
+
+logging:
+  level:
+    root: info

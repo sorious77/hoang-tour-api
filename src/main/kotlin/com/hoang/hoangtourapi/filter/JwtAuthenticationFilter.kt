@@ -1,6 +1,6 @@
 package com.hoang.hoangtourapi.filter
 
-import com.hoang.hoangtourapi.domain.member.model.MemberDetailsService
+import com.hoang.hoangtourapi.domain.member.auth.MemberDetailsService
 import com.hoang.hoangtourapi.utils.JwtTokenUtil
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest

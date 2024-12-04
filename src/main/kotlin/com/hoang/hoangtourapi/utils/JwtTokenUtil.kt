@@ -1,6 +1,6 @@
 package com.hoang.hoangtourapi.utils
 
-import com.hoang.hoangtourapi.domain.member.model.MemberDetails
+import com.hoang.hoangtourapi.domain.member.auth.MemberDetails
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys

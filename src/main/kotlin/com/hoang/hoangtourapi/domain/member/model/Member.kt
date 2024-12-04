@@ -13,7 +13,7 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "MEMBERS")
-data class Member(
+class Member(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBER_ID", nullable = false)
     var memberId: Long,
@@ -28,4 +28,6 @@ data class Member(
     @Enumerated(value = EnumType.STRING)
     @Column(name = "MEMBER_TYPE", nullable = false)
     var memberType: MemberType = MemberType.BASIC,
+    @Column(name = "PROFILE_IMAGE", nullable = true)
+    var profileImage: String?,
 ) : BaseEntity()

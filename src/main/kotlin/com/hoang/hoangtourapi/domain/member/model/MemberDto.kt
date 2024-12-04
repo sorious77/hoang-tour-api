@@ -26,3 +26,22 @@ data class SignInRes(
     val nickname: String,
     val token: String,
 )
+
+data class ProfileReq(
+    @field:NotEmpty(message = "닉네임은 필수값입니다.")
+    val nickname: String?,
+    val pageNumber: Int? = 0,
+)
+
+data class ProfileRes(
+    val nickname: String,
+    val introduction: String,
+    val reviews: List<ProfileReviewRes>,
+    val totalFollowerCount: Long,
+    val totalFollowingCount: Long,
+) {
+    data class ProfileReviewRes(
+        val reviewId: Long,
+        val imageUrl: String,
+    )
+}

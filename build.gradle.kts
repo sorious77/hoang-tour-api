@@ -23,6 +23,7 @@ repositories {
 
 object Version {
     const val KOTEST = "5.9.1"
+    const val JDSL = "3.5.3"
 }
 
 dependencies {
@@ -61,6 +62,11 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
+
+    // JDSL
+    implementation("com.linecorp.kotlin-jdsl:jpql-dsl:${Version.JDSL}")
+    implementation("com.linecorp.kotlin-jdsl:jpql-render:${Version.JDSL}")
+    implementation("com.linecorp.kotlin-jdsl:spring-data-jpa-support:${Version.JDSL}")
 }
 
 kotlin {

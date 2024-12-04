@@ -1,12 +1,14 @@
 package com.hoang.hoangtourapi.domain.member
 
+import com.hoang.hoangtourapi.domain.member.auth.MemberDetailsService
 import com.hoang.hoangtourapi.domain.member.model.CreateMemberReq
 import com.hoang.hoangtourapi.domain.member.model.Member
-import com.hoang.hoangtourapi.domain.member.model.MemberDetailsService
+import com.hoang.hoangtourapi.domain.member.model.ProfileReq
 import com.hoang.hoangtourapi.domain.member.model.SignInReq
 import com.hoang.hoangtourapi.domain.member.model.SignInRes
 import com.hoang.hoangtourapi.utils.JwtTokenUtil
 import jakarta.validation.Valid
+import org.springdoc.core.annotations.ParameterObject
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.web.bind.annotation.GetMapping
@@ -50,5 +52,12 @@ class MemberController(
         val token = jwtTokenUtil.generateToken(memberDetails)
 
         return SignInRes(memberDetails.getNickname(), token)
+    }
+
+    @GetMapping("/profile")
+    fun findMemberProfileByNickname(
+        @ParameterObject @Valid req: ProfileReq,
+    ): Any? {
+        return memberService.findMemberProfileByNickname(req)
     }
 }

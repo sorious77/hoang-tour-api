@@ -1,4 +1,4 @@
-package com.hoang.hoangtourapi.domain.member.model
+package com.hoang.hoangtourapi.domain.member.auth
 
 import com.hoang.hoangtourapi.domain.member.MemberRepository
 import com.hoang.hoangtourapi.enums.MemberType

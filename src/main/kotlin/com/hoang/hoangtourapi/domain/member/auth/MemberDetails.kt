@@ -1,4 +1,4 @@
-package com.hoang.hoangtourapi.domain.member.model
+package com.hoang.hoangtourapi.domain.member.auth
 
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails

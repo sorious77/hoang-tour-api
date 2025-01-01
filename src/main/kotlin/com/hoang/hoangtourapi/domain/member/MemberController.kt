@@ -4,6 +4,7 @@ import com.hoang.hoangtourapi.domain.member.auth.MemberDetailsService
 import com.hoang.hoangtourapi.domain.member.model.CreateMemberReq
 import com.hoang.hoangtourapi.domain.member.model.Member
 import com.hoang.hoangtourapi.domain.member.model.ProfileReq
+import com.hoang.hoangtourapi.domain.member.model.ProfileRes
 import com.hoang.hoangtourapi.domain.member.model.SignInReq
 import com.hoang.hoangtourapi.domain.member.model.SignInRes
 import com.hoang.hoangtourapi.utils.JwtTokenUtil
@@ -25,6 +26,7 @@ class MemberController(
     private val authenticationManager: AuthenticationManager,
     private val jwtTokenUtil: JwtTokenUtil,
     private val memberDetailsService: MemberDetailsService,
+    private val memberMapper: MemberMapper,
 ) {
     @GetMapping
     fun getMemberByMemberId(
@@ -49,15 +51,15 @@ class MemberController(
         )
 
         val memberDetails = memberDetailsService.loadUserByUsername(req.email ?: "")
-        val token = jwtTokenUtil.generateToken(memberDetails)
+        val token = jwtTokenUtil.generateAccessToken(memberDetails)
 
-        return SignInRes(memberDetails.getNickname(), token)
+        return memberMapper.toSignInRes(memberDetails, token)
     }
 
     @GetMapping("/profile")
     fun findMemberProfileByNickname(
         @ParameterObject @Valid req: ProfileReq,
-    ): Any? {
+    ): ProfileRes? {
         return memberService.findMemberProfileByNickname(req)
     }
 }

@@ -1,5 +1,6 @@
 package com.hoang.hoangtourapi.domain.member
 
+import com.hoang.hoangtourapi.domain.member.auth.MemberDetails
 import com.hoang.hoangtourapi.domain.member.model.CreateMemberReq
 import com.hoang.hoangtourapi.domain.member.model.Member
 import com.hoang.hoangtourapi.domain.member.model.SignInRes
@@ -24,5 +25,13 @@ interface MemberMapper {
         encryptedPassword: String,
     ): Member
 
-    fun toSignInRes(member: Member): SignInRes
+    @Mappings(
+        Mapping(target = "email", source = "member.username"),
+        Mapping(target = "accessToken", source = "token"),
+        Mapping(target = "refreshToken", source = "token"),
+    )
+    fun toSignInRes(
+        member: MemberDetails,
+        token: String,
+    ): SignInRes
 }

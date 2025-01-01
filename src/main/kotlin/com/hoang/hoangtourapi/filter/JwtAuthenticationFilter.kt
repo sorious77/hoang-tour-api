@@ -20,6 +20,18 @@ class JwtAuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain,
     ) {
+        val path = request.servletPath
+        // 인증 예외 경로 처리
+        if (path.startsWith("/swagger-ui") ||
+            path.startsWith("/api-docs") ||
+            path.startsWith("/v3/api-docs") ||
+            path.startsWith("/api/v1/members") ||
+            path.startsWith("/health")
+        ) {
+            filterChain.doFilter(request, response)
+            return
+        }
+
         val header = request.getHeader("Authorization")
         val token = header?.takeIf { it.startsWith("Bearer ") }?.removePrefix("Bearer ")
 

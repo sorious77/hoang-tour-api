@@ -23,8 +23,11 @@ data class SignInReq(
 )
 
 data class SignInRes(
+    val email: String,
     val nickname: String,
-    val token: String,
+    val introduction: String?,
+    val refreshToken: String,
+    val accessToken: String,
 )
 
 data class ProfileReq(
@@ -34,6 +37,7 @@ data class ProfileReq(
 )
 
 data class ProfileRes(
+    val email: String,
     val nickname: String,
     val introduction: String,
     val reviews: List<ProfileReviewRes>,

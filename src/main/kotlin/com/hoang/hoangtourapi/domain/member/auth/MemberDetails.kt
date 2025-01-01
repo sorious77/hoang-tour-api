@@ -7,6 +7,7 @@ class MemberDetails(
     private val username: String,
     private val password: String,
     private val nickname: String,
+    private val introduction: String?,
     private val authorities: Collection<GrantedAuthority>,
 ) : UserDetails {
     override fun getAuthorities() = authorities

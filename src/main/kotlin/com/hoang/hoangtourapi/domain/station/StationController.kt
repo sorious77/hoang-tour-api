@@ -15,6 +15,10 @@ class StationController(
     fun getStationListByLine(
         @RequestParam lineId: Long?,
     ): List<StationDto>? {
-        return stationService.getStationListByLine(lineId)
+        return if (lineId == null || lineId == 0L) {
+            stationService.getEntireStationList()
+        } else {
+            stationService.getStationListByLine(lineId)
+        }
     }
 }

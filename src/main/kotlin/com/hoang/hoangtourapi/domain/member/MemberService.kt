@@ -46,6 +46,7 @@ class MemberService(
         val followCount = followRepository.findFollowCountByNickname(req.nickname)
 
         return ProfileRes(
+            email = member.email,
             nickname = member.nickname,
             introduction = member.introduction ?: "",
             reviews = reviews ?: listOf(),

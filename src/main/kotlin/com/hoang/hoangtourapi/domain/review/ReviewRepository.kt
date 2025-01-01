@@ -21,7 +21,7 @@ class CustomReviewRepositoryImpl(
     private val executor: KotlinJdslJpqlExecutor,
 ) : CustomReviewRepository {
     override fun findReviewByNickname(req: ProfileReq): List<ProfileRes.ProfileReviewRes>? {
-        val pageable = PageRequest.of(req.pageNumber ?: 0, 10)
+        val pageable = PageRequest.of(req.pageNumber ?: 0, 20)
 
         return executor
             .findPage(pageable) {

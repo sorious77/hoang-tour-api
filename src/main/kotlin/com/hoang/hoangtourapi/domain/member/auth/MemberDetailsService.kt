@@ -27,6 +27,6 @@ class MemberDetailsService(
             ),
         )
 
-        return MemberDetails(email, member.password, member.nickname, authorities)
+        return MemberDetails(email, member.password, member.nickname, member.introduction ?: "", authorities)
     }
 }

@@ -13,6 +13,7 @@ enum class BaseResponseStatus(val code: Int, val description: String) {
     SIGN_IN_FAIL(2004, "로그인에 실패했습니다."),
     EXPIRED_SESSION(2005, "세션이 만료되었습니다."),
     INVALID_TOKEN(2006, "유효하지 않은 토큰입니다."),
+    INVALID_MEMBER(2007, "유효하지 않은 멤버 정보입니다."),
 
     /**
      * 서버 에러

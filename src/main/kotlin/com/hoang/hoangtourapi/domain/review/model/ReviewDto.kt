@@ -1,0 +1,39 @@
+package com.hoang.hoangtourapi.domain.review.model
+
+import java.time.LocalDateTime
+
+data class SaveReviewReq(
+    val title: String,
+    val contents: String,
+    val email: String,
+    val memberId: Long,
+    val stationId: Long,
+    val stationName: String,
+)
+
+data class ReviewRes(
+    val reviewId: Long,
+    val title: String,
+    val contents: String,
+    val nickname: String,
+    val insDate: LocalDateTime,
+    val isModified: Boolean,
+    val stationName: String,
+)
+
+data class ReviewDetailRes(
+    val reviewId: Long,
+    val title: String,
+    val contents: String,
+    val nickname: String,
+    val insDate: LocalDateTime,
+    val isModified: Boolean,
+    val stationName: String,
+    val reviewImageList: List<ReviewImage>,
+)
+
+data class ReviewImage(
+    val reviewId: Long,
+    val imageUrl: String,
+    val order: Int,
+)

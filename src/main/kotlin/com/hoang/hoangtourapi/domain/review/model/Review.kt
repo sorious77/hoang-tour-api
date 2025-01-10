@@ -18,6 +18,8 @@ class Review(
     var title: String,
     @Column(name = "CONTENTS", nullable = false)
     var contents: String,
+    @Column(name = "STATION_ID", nullable = false)
+    var stationId: Long,
     @Column(name = "MEMBER_ID", nullable = false)
     var memberId: Long,
 ) : BaseEntity()

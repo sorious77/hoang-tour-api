@@ -1,6 +1,7 @@
 package com.hoang.hoangtourapi.domain.station
 
 import com.hoang.hoangtourapi.domain.line.LineService
+import com.hoang.hoangtourapi.domain.station.model.Station
 import com.hoang.hoangtourapi.domain.station.model.StationDto
 import com.hoang.hoangtourapi.domain.stationline.StationLineService
 import org.springframework.stereotype.Service
@@ -13,7 +14,7 @@ class StationService(
     private val stationMapper: StationMapper,
 ) {
     // 특정 호선에 해당하는 지하철 역 정보들을 반환
-    fun getStationListByLine(lineId: Long): List<StationDto>? {
+    fun findStationListByLine(lineId: Long): List<StationDto>? {
         val stationLineList = stationLineService.getStationLineListByLineId(lineId)
         if (stationLineList.isEmpty()) return null
 
@@ -42,7 +43,7 @@ class StationService(
         }
     }
 
-    fun getEntireStationList(): List<StationDto> {
+    fun findEntireStationList(): List<StationDto> {
         val stationList = stationRepository.findAll()
 
         // stationId에 해당하는 모든 stationLineList 조회
@@ -64,5 +65,9 @@ class StationService(
                     this.lineColor = associatedLines?.firstOrNull()?.lineColor
                 }
         }
+    }
+
+    fun findStationByStationId(stationId: Long): Station? {
+        return stationRepository.findStationByStationId(stationId)
     }
 }

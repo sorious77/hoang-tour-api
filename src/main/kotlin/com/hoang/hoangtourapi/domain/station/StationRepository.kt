@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface StationRepository : JpaRepository<Station, Long> {
     fun findStationByStationIdIn(stationIdList: List<Long>): List<Station>
+
+    fun findStationByStationId(stationId: Long): Station?
 }

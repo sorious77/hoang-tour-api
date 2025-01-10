@@ -16,9 +16,9 @@ class StationController(
         @RequestParam lineId: Long?,
     ): List<StationDto>? {
         return if (lineId == null || lineId == 0L) {
-            stationService.getEntireStationList()
+            stationService.findEntireStationList()
         } else {
-            stationService.getStationListByLine(lineId)
+            stationService.findStationListByLine(lineId)
         }
     }
 }

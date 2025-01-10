@@ -1,6 +1,7 @@
 package com.hoang.hoangtourapi.domain.review
 
 import com.hoang.hoangtourapi.domain.review.model.ReviewDetailRes
+import com.hoang.hoangtourapi.domain.review.model.ReviewRes
 import com.hoang.hoangtourapi.domain.review.model.SaveReviewReq
 import com.hoang.hoangtourapi.enums.BaseResponseStatus
 import com.hoang.hoangtourapi.exception.BaseException
@@ -21,7 +22,7 @@ class ReviewController(
     fun saveReview(
         @RequestBody req: SaveReviewReq,
         auth: Authentication,
-    ): Any {
+    ): ReviewRes {
         if (req.email != auth.name) {
             throw BaseException(BaseResponseStatus.INVALID_MEMBER)
         }

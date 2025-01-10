@@ -2,6 +2,7 @@ package com.hoang.hoangtourapi.domain.review
 
 import com.hoang.hoangtourapi.domain.member.MemberService
 import com.hoang.hoangtourapi.domain.review.model.ReviewDetailRes
+import com.hoang.hoangtourapi.domain.review.model.ReviewRes
 import com.hoang.hoangtourapi.domain.review.model.SaveReviewReq
 import com.hoang.hoangtourapi.domain.station.StationService
 import com.hoang.hoangtourapi.enums.BaseResponseStatus
@@ -17,7 +18,7 @@ class ReviewService(
     private val reviewMapper: ReviewMapper,
 ) {
     @Transactional
-    fun saveReview(req: SaveReviewReq): Any {
+    fun saveReview(req: SaveReviewReq): ReviewRes {
         val member = memberService.findMemberByMemberId(req.memberId)
         if (member?.email != req.email) throw BaseException(BaseResponseStatus.INVALID_MEMBER)
 

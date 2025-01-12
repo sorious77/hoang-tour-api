@@ -1,5 +1,6 @@
 package com.hoang.hoangtourapi.domain.review.model
 
+import org.springframework.web.multipart.MultipartFile
 import java.time.LocalDateTime
 
 data class SaveReviewReq(
@@ -9,6 +10,7 @@ data class SaveReviewReq(
     val memberId: Long,
     val stationId: Long,
     val stationName: String,
+    val imageList: List<MultipartFile>,
 )
 
 data class ReviewRes(

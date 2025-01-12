@@ -12,11 +12,18 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 100MB
 
 logging:
   level:
     org.hibernate.type.descriptor:
       sql: trace
+      type: trace
+    org.springframework.security : DEBUG
 
 jwt:
-  secretKey: 1jF6cIqwJBCjgKFFCGOnTZ16xF7gN04U2lhqez9j0CMKrtIJ3JZva2cVlF1KbpryXoGl3mi96Y8+2kvveqp9lQ==
+  accessSecretKey: 1jF6cIqwJBCjgKFFCGOnTZ16xF7gN04U2lhqez9j0CMKrtIJ3JZva2cVlF1KbpryXoGl3mi96Y8+2kvveqp9lQ==
+  refreshSecretKey: hX8rYzawftO1goU9uV6oYomS4XXhEDHx

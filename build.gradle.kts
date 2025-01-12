@@ -24,12 +24,14 @@ repositories {
 object Version {
     const val KOTEST = "5.9.1"
     const val JDSL = "3.5.3"
+    const val COROUTINE = "1.10.1"
 }
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
@@ -68,6 +70,13 @@ dependencies {
     implementation("com.linecorp.kotlin-jdsl:jpql-dsl:${Version.JDSL}")
     implementation("com.linecorp.kotlin-jdsl:jpql-render:${Version.JDSL}")
     implementation("com.linecorp.kotlin-jdsl:spring-data-jpa-support:${Version.JDSL}")
+
+    // aws
+    implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
+
+    // coroutine
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.COROUTINE}")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:${Version.COROUTINE}")
 }
 
 kotlin {

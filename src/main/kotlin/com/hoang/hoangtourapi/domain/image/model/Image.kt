@@ -18,6 +18,6 @@ class Image(
     val reviewId: Long,
     @Column(name = "IMAGE_URL", nullable = false)
     val imageUrl: String,
-    @Column(name = "ORDER", nullable = false)
-    val order: Int,
+    @Column(name = "IMAGE_ORDER", nullable = false)
+    val imageOrder: Int,
 ) : BaseEntity()

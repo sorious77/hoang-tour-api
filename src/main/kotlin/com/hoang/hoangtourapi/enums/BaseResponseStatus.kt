@@ -14,6 +14,9 @@ enum class BaseResponseStatus(val code: Int, val description: String) {
     EXPIRED_SESSION(2005, "세션이 만료되었습니다."),
     INVALID_TOKEN(2006, "유효하지 않은 토큰입니다."),
     INVALID_MEMBER(2007, "유효하지 않은 멤버 정보입니다."),
+    FILE_NAME_WRONG_FORMAT(2007, "파일명이 유효하지 않습니다."),
+    FILE_EXTENSION_NOT_EXISTS(2008, "파일 확장자가 존재하지 않습니다."),
+    FILE_EXTENSION_NOT_SUPPORTED(2009, "지원되지 않는 파일 확장자입니다."),
 
     /**
      * 서버 에러

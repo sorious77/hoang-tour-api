@@ -7,9 +7,9 @@ import com.hoang.hoangtourapi.enums.BaseResponseStatus
 import com.hoang.hoangtourapi.exception.BaseException
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -20,7 +20,7 @@ class ReviewController(
 ) {
     @PostMapping
     fun saveReview(
-        @RequestBody req: SaveReviewReq,
+        @ModelAttribute req: SaveReviewReq,
         auth: Authentication,
     ): ReviewRes {
         if (req.email != auth.name) {
@@ -34,6 +34,13 @@ class ReviewController(
     fun getReviewList(
         @PathVariable page: Int,
     ): List<ReviewDetailRes> {
-        return reviewService.getReviewList(page)
+        return reviewService.findReviewList(page)
+    }
+
+    @GetMapping("{reviewId}")
+    fun findReviewByReviewId(
+        @PathVariable reviewId: Long,
+    ): ReviewDetailRes? {
+        return reviewService.findReviewByReviewId(reviewId)
     }
 }

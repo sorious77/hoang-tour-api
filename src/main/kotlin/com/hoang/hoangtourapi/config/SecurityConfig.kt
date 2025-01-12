@@ -22,6 +22,8 @@ class SecurityConfig(
 ) {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
+        println("filterChain called")
+
         http.authorizeHttpRequests {
             it.requestMatchers(
                 "/swagger",
@@ -32,7 +34,7 @@ class SecurityConfig(
                 "/v3/api-docs/**",
                 "/api/v1/members/**",
                 "/health**",
-                "/error",
+                "/error**",
             ).permitAll()
                 .anyRequest().authenticated()
         }
@@ -40,6 +42,7 @@ class SecurityConfig(
             .cors { cors -> cors.configurationSource(corsConfigurationSource) }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .anonymous { it.disable() }
 
         return http.build()
     }

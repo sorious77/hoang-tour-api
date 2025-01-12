@@ -30,5 +30,5 @@ abstract class BaseEntity {
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "STATUS", nullable = false)
-    var status: Status = Status.ACTIVE
+    var status: Status? = Status.ACTIVE
 }

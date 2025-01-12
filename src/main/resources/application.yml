@@ -1,6 +1,8 @@
 spring:
   application:
     name: hoang-tour-api
+  profiles:
+    include: private
 
 springdoc:
   swagger-ui:

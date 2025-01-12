@@ -5,6 +5,7 @@ import com.hoang.hoangtourapi.utils.JwtTokenUtil
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
@@ -15,6 +16,10 @@ class JwtAuthenticationFilter(
     private val jwtTokenUtil: JwtTokenUtil,
     private val memberDetailsService: MemberDetailsService,
 ) : OncePerRequestFilter() {
+    companion object {
+        private val log = LoggerFactory.getLogger(JwtAuthenticationFilter::class.java)
+    }
+
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
@@ -47,8 +52,19 @@ class JwtAuthenticationFilter(
                 )
 
             SecurityContextHolder.getContext().authentication = authentication
+        } else {
+            response.status = HttpServletResponse.SC_FORBIDDEN
+            response.writer.write("Forbidden: Invalid or missing token")
+            return
         }
 
+        val startTime = System.currentTimeMillis()
         filterChain.doFilter(request, response)
+        val endTime = System.currentTimeMillis()
+
+        val url = request.requestURI
+        val queryString = if (request.queryString.isNullOrEmpty()) "" else "?${request.queryString}"
+
+        log.info("${request.method.uppercase()} $url$queryString ${endTime - startTime}ms")
     }
 }

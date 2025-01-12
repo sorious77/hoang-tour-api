@@ -21,6 +21,8 @@ interface CustomReviewRepository {
     fun findReviewByNickname(req: ProfileReq): List<ProfileRes.ProfileReviewRes>?
 
     fun findReviewListPaging(page: Int): List<ReviewDetailRes>
+
+    fun findReviewByReviewId(reviewId: Long): ReviewDetailRes?
 }
 
 @Component
@@ -39,7 +41,7 @@ class CustomReviewRepositoryImpl(
                         join(Member::class).on(path(Review::memberId).equal(path(Member::memberId))),
                         join(Image::class).on(
                             path(Review::reviewId).equal(path(Image::reviewId))
-                                .and(path(Image::order).equal(1)),
+                                .and(path(Image::imageOrder).equal(1)),
                         ),
                     )
                     .where(
@@ -83,7 +85,7 @@ class CustomReviewRepositoryImpl(
                 selectNew<ReviewImage>(
                     path(Review::reviewId),
                     path(Image::imageUrl),
-                    path(Image::order),
+                    path(Image::imageOrder),
                 ).from(
                     entity(Review::class),
                     join(Image::class).on(path(Review::reviewId).eq(path(Image::reviewId))),
@@ -104,5 +106,46 @@ class CustomReviewRepositoryImpl(
 
             reviewMapper.toReviewDetailRes(it, reviewImageList)
         }
+    }
+
+    override fun findReviewByReviewId(reviewId: Long): ReviewDetailRes? {
+        val review =
+            executor.findAll {
+                selectNew<ReviewRes>(
+                    path(Review::reviewId),
+                    path(Review::title),
+                    path(Review::contents),
+                    path(Member::nickname),
+                    path(Review::insDate),
+                    path(Review::insDate).equal(path(Review::updDate)).`as`(expression("isModified")),
+                    path(Station::stationName),
+                )
+                    .from(
+                        entity(Review::class),
+                        join(Member::class).on(path(Review::memberId).equal(path(Member::memberId))),
+                        join(Station::class).on(path(Review::stationId).equal(path(Station::stationId))),
+                    )
+                    .where(
+                        path(Review::status).eq(Status.ACTIVE)
+                            .and(path(Review::reviewId).eq(reviewId)),
+                    )
+            }.filterNotNull()[0]
+
+        val reviewImages =
+            executor.findAll {
+                selectNew<ReviewImage>(
+                    path(Review::reviewId),
+                    path(Image::imageUrl),
+                    path(Image::imageOrder),
+                ).from(
+                    entity(Review::class),
+                    join(Image::class).on(path(Review::reviewId).eq(path(Image::reviewId))),
+                ).where(
+                    path(Image::status).eq(Status.ACTIVE)
+                        .and(path(Review::reviewId).eq(reviewId)),
+                )
+            }.mapNotNull { it }
+
+        return reviewMapper.toReviewDetailRes(review, reviewImages)
     }
 }

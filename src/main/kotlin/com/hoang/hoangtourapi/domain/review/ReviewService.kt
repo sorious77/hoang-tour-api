@@ -4,6 +4,7 @@ import com.hoang.hoangtourapi.domain.image.ImageS3Service
 import com.hoang.hoangtourapi.domain.image.ImageService
 import com.hoang.hoangtourapi.domain.member.MemberService
 import com.hoang.hoangtourapi.domain.member.model.Member
+import com.hoang.hoangtourapi.domain.review.model.DeleteReveiwReq
 import com.hoang.hoangtourapi.domain.review.model.ReviewDetailRes
 import com.hoang.hoangtourapi.domain.review.model.ReviewRes
 import com.hoang.hoangtourapi.domain.review.model.SaveReviewReq
@@ -74,6 +75,28 @@ class ReviewService(
         )
 
         return reviewMapper.toReviewRes(review, member.nickname, req.stationName)
+    }
+
+    @Transactional
+    fun deleteReview(req: DeleteReveiwReq): Boolean {
+        val member = memberService.findMemberByMemberId(req.memberId)
+        if (member?.email != req.email) throw BaseException(BaseResponseStatus.INVALID_MEMBER)
+
+        val review =
+            reviewRepository.findReviewByReviewId(req.reviewId)
+                ?: throw BaseException(BaseResponseStatus.ENTITY_NOT_FOUND)
+
+        if (review.insOprt != member.memberId.toString()) throw BaseException(BaseResponseStatus.NO_AUTH)
+
+        if (review.status == Status.DELETE) throw BaseException(BaseResponseStatus.UPDATE_IMPOSSIBLE)
+
+        reviewRepository.save(
+            review.apply {
+                status = Status.DELETE
+            },
+        )
+
+        return true
     }
 
     private fun validateSaveParam(

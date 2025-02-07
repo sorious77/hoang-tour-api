@@ -23,6 +23,12 @@ data class UpdateReviewReq(
     val stationName: String,
 )
 
+data class DeleteReveiwReq(
+    val reviewId: Long,
+    val email: String,
+    val memberId: Long,
+)
+
 data class ReviewRes(
     val reviewId: Long,
     val title: String,

@@ -3,6 +3,7 @@ package com.hoang.hoangtourapi.domain.review
 import com.hoang.hoangtourapi.domain.review.model.ReviewDetailRes
 import com.hoang.hoangtourapi.domain.review.model.ReviewRes
 import com.hoang.hoangtourapi.domain.review.model.SaveReviewReq
+import com.hoang.hoangtourapi.domain.review.model.UpdateReviewReq
 import com.hoang.hoangtourapi.enums.BaseResponseStatus
 import com.hoang.hoangtourapi.exception.BaseException
 import org.springframework.security.core.Authentication
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -23,9 +25,7 @@ class ReviewController(
         @ModelAttribute req: SaveReviewReq,
         auth: Authentication,
     ): ReviewRes {
-        if (req.email != auth.name) {
-            throw BaseException(BaseResponseStatus.INVALID_MEMBER)
-        }
+        validateMemberAuth(req.email, auth)
 
         return reviewService.saveReview(req)
     }
@@ -42,5 +42,33 @@ class ReviewController(
         @PathVariable reviewId: Long,
     ): ReviewDetailRes? {
         return reviewService.findReviewByReviewId(reviewId)
+    }
+
+    @PutMapping
+    fun updateReview(
+        @ModelAttribute req: UpdateReviewReq,
+        auth: Authentication,
+    ): ReviewRes {
+        validateMemberAuth(req.email, auth)
+
+        return reviewService.updateReview(req)
+    }
+
+    fun deleteReview(
+        @ModelAttribute req: UpdateReviewReq,
+        auth: Authentication,
+    ): Boolean {
+        validateMemberAuth(req.email, auth)
+
+        return true
+    }
+
+    private fun validateMemberAuth(
+        email: String,
+        auth: Authentication,
+    ) {
+        if (email != auth.name) {
+            throw BaseException(BaseResponseStatus.INVALID_MEMBER)
+        }
     }
 }

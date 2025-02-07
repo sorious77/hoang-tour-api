@@ -13,6 +13,16 @@ data class SaveReviewReq(
     val imageList: List<MultipartFile>,
 )
 
+data class UpdateReviewReq(
+    val reviewId: Long,
+    val title: String,
+    val contents: String,
+    val email: String,
+    val memberId: Long,
+    val stationId: Long,
+    val stationName: String,
+)
+
 data class ReviewRes(
     val reviewId: Long,
     val title: String,

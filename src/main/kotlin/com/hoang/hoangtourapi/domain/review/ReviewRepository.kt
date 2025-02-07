@@ -15,14 +15,16 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Component
 
-interface ReviewRepository : JpaRepository<Review, Long>, CustomReviewRepository
+interface ReviewRepository : JpaRepository<Review, Long>, CustomReviewRepository {
+    fun findReviewByReviewId(reviewId: Long): Review?
+}
 
 interface CustomReviewRepository {
     fun findReviewByNickname(req: ProfileReq): List<ProfileRes.ProfileReviewRes>?
 
     fun findReviewListPaging(page: Int): List<ReviewDetailRes>
 
-    fun findReviewByReviewId(reviewId: Long): ReviewDetailRes?
+    fun findReviewDetailByReviewId(reviewId: Long): ReviewDetailRes?
 }
 
 @Component
@@ -108,7 +110,7 @@ class CustomReviewRepositoryImpl(
         }
     }
 
-    override fun findReviewByReviewId(reviewId: Long): ReviewDetailRes? {
+    override fun findReviewDetailByReviewId(reviewId: Long): ReviewDetailRes? {
         val review =
             executor.findAll {
                 selectNew<ReviewRes>(

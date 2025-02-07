@@ -17,6 +17,8 @@ enum class BaseResponseStatus(val code: Int, val description: String) {
     FILE_NAME_WRONG_FORMAT(2007, "파일명이 유효하지 않습니다."),
     FILE_EXTENSION_NOT_EXISTS(2008, "파일 확장자가 존재하지 않습니다."),
     FILE_EXTENSION_NOT_SUPPORTED(2009, "지원되지 않는 파일 확장자입니다."),
+    NO_AUTH(2010, "권한이 없습니다."),
+    UPDATE_IMPOSSIBLE(2011, "수정이 불가능한 상태입니다."),
 
     /**
      * 서버 에러

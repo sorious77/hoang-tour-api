@@ -9,7 +9,9 @@ import com.hoang.hoangtourapi.domain.review.model.ReviewDetailRes
 import com.hoang.hoangtourapi.domain.review.model.ReviewImage
 import com.hoang.hoangtourapi.domain.review.model.ReviewRes
 import com.hoang.hoangtourapi.domain.station.model.Station
+import com.hoang.hoangtourapi.enums.BaseResponseStatus
 import com.hoang.hoangtourapi.enums.Status
+import com.hoang.hoangtourapi.exception.BaseException
 import com.linecorp.kotlinjdsl.support.spring.data.jpa.repository.KotlinJdslJpqlExecutor
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.jpa.repository.JpaRepository
@@ -111,7 +113,7 @@ class CustomReviewRepositoryImpl(
     }
 
     override fun findReviewDetailByReviewId(reviewId: Long): ReviewDetailRes? {
-        val review =
+        val reviewList =
             executor.findAll {
                 selectNew<ReviewRes>(
                     path(Review::reviewId),
@@ -131,7 +133,13 @@ class CustomReviewRepositoryImpl(
                         path(Review::status).eq(Status.ACTIVE)
                             .and(path(Review::reviewId).eq(reviewId)),
                     )
-            }.filterNotNull()[0]
+            }.filterNotNull()
+
+        if (reviewList.isEmpty()) {
+            throw BaseException(BaseResponseStatus.EMPTY_RESULT)
+        }
+
+        val review = reviewList[0]
 
         val reviewImages =
             executor.findAll {

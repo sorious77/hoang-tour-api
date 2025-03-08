@@ -31,6 +31,7 @@ interface ReviewMapper {
         isModified: Boolean? = false,
     ): ReviewRes
 
+    @Mapping(target = "userEmail", source = "review.email")
     fun toReviewDetailRes(
         review: ReviewRes,
         reviewImageList: List<ReviewImage>,

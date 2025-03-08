@@ -22,8 +22,6 @@ class SecurityConfig(
 ) {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        println("filterChain called")
-
         http.authorizeHttpRequests {
             it.requestMatchers(
                 "/swagger",

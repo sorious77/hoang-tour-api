@@ -6,7 +6,7 @@ data class StationDto(
     val stationEngName: String,
     val latitude: Double,
     val longitude: Double,
-    val description: String,
+    val description: String?,
     var lineNameList: List<String>?,
     var lineColor: String?,
 )

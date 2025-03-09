@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 class MemberDetails(
+    private val memberId: Long,
     private val username: String,
     private val password: String,
     private val nickname: String,
@@ -25,4 +26,6 @@ class MemberDetails(
     override fun isEnabled() = true
 
     fun getNickname() = nickname // 닉네임 반환
+
+    fun getMemberId() = memberId
 }

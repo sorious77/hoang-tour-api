@@ -28,6 +28,7 @@ interface ReviewMapper {
         review: Review,
         nickname: String,
         stationName: String,
+        email: String,
         isModified: Boolean? = false,
     ): ReviewRes
 

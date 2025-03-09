@@ -23,6 +23,7 @@ data class SignInReq(
 )
 
 data class SignInRes(
+    val memberId: Long,
     val email: String,
     val nickname: String,
     val introduction: String?,

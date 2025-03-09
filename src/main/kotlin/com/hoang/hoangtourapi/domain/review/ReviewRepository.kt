@@ -35,7 +35,7 @@ class CustomReviewRepositoryImpl(
     private val reviewMapper: ReviewMapper,
 ) : CustomReviewRepository {
     override fun findReviewByNickname(req: ProfileReq): List<ProfileRes.ProfileReviewRes>? {
-        val pageable = PageRequest.of(req.pageNumber ?: 0, 20)
+        val pageable = PageRequest.of(req.pageNumber?.let { req.pageNumber - 1 } ?: 0, 20)
 
         return executor
             .findPage(pageable) {

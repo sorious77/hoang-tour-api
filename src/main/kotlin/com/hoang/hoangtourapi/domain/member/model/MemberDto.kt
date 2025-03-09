@@ -2,6 +2,7 @@ package com.hoang.hoangtourapi.domain.member.model
 
 import com.hoang.hoangtourapi.validator.EmailValid
 import com.hoang.hoangtourapi.validator.PasswordValid
+import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotEmpty
 
 data class CreateMemberReq(
@@ -34,6 +35,7 @@ data class SignInRes(
 data class ProfileReq(
     @field:NotEmpty(message = "닉네임은 필수값입니다.")
     val nickname: String?,
+    @field:Min(value = 1, message = "페이지 최소값은 1입니다.")
     val pageNumber: Int? = 0,
 )
 

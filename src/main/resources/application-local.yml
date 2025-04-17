@@ -22,8 +22,12 @@ logging:
     org.hibernate.type.descriptor:
       sql: trace
       type: trace
-    org.springframework.security : DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.orm.jdbc.bind: trace
 
 jwt:
   accessSecretKey: 1jF6cIqwJBCjgKFFCGOnTZ16xF7gN04U2lhqez9j0CMKrtIJ3JZva2cVlF1KbpryXoGl3mi96Y8+2kvveqp9lQ==
   refreshSecretKey: hX8rYzawftO1goU9uV6oYomS4XXhEDHx
+
+image:
+  basePath: /Desktop/hoang-tour/images

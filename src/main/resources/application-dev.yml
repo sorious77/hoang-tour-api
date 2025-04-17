@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://hoang-tour-dev-db.cfaygeaeawmd.ap-northeast-2.rds.amazonaws.com:3306/hoang_tour
+    username: root
+    password: hotour1013!!
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 100MB
+
+jwt:
+  accessSecretKey: 1jF6cIqwJBCjgKFFCGOnTZ16xF7gN04U2lhqez9j0CMKrtIJ3JZva2cVlF1KbpryXoGl3mi96Y8+2kvveqp9lQ==
+  refreshSecretKey: hX8rYzawftO1goU9uV6oYomS4XXhEDHx

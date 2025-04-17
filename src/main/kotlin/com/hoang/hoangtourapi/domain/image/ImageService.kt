@@ -1,26 +1,49 @@
 package com.hoang.hoangtourapi.domain.image
 
 import com.hoang.hoangtourapi.domain.review.model.SaveReviewReq
+import jakarta.transaction.Transactional
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
+import java.io.File
+import java.nio.file.Paths
 
 @Service
 class ImageService(
     private val imageMapper: ImageMapper,
     private val imageRepository: ImageRepository,
 ) {
+    @Value("\${image.basePath}")
+    lateinit var imageBasePath: String
+
+    /**
+     * 이미지를 로컬에 저장하고, 그 정보를 DB에도 저장
+     */
+    @Transactional
     fun saveImageList(
         reviewId: Long,
-        imageList: List<Pair<String, Int>>,
+        imageList: List<MultipartFile>,
         req: SaveReviewReq,
     ) {
-        imageList.forEach {
-            val (url, order) = it
+        val pathList = saveMultiImageFile(imageList)
 
-//            println(imageMapper.toEntity(reviewId, url, order, req))
-
+        pathList.forEachIndexed { order, path ->
             imageRepository.save(
-                imageMapper.toEntity(reviewId, url.removePrefix("https://"), order, req),
+                imageMapper.toEntity(reviewId, path, order, req),
             )
+        }
+    }
+
+    /**
+     * 이미지를 로컬에 저장
+     */
+    fun saveMultiImageFile(imageList: List<MultipartFile>): List<String> {
+        return imageList.map { image ->
+            val fileName = image.originalFilename
+            val path = "${Paths.get(System.getProperty("user.home"), imageBasePath)}/$fileName"
+
+            image.transferTo(File(path))
+            path
         }
     }
 }

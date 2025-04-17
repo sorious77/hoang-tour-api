@@ -1,6 +1,5 @@
 package com.hoang.hoangtourapi.domain.review
 
-import com.hoang.hoangtourapi.domain.image.ImageS3Service
 import com.hoang.hoangtourapi.domain.image.ImageService
 import com.hoang.hoangtourapi.domain.member.MemberService
 import com.hoang.hoangtourapi.domain.member.model.Member
@@ -22,7 +21,6 @@ class ReviewService(
     private val memberService: MemberService,
     private val stationService: StationService,
     private val reviewMapper: ReviewMapper,
-    private val imageS3Service: ImageS3Service,
     private val imageService: ImageService,
 ) {
     @Transactional
@@ -31,17 +29,9 @@ class ReviewService(
 
         val review = reviewRepository.save(reviewMapper.toEntity(req, member.memberId))
 
-        imageS3Service.uploadMultiImage(req.imageList)
-        val imageUrlList =
-            req.imageList.mapIndexed { index, file ->
-                val url = imageS3Service.getFile(file.originalFilename ?: "")
+        imageService.saveImageList(review.reviewId, req.imageList, req)
 
-                Pair(url, index)
-            }
-
-        imageService.saveImageList(review.reviewId, imageUrlList, req)
-
-        return reviewMapper.toReviewRes(review, member.nickname, req.stationName)
+        return reviewMapper.toReviewRes(review, member.nickname, req.stationName, req.email)
     }
 
     fun findReviewList(page: Int): List<ReviewDetailRes> {
@@ -74,7 +64,7 @@ class ReviewService(
             },
         )
 
-        return reviewMapper.toReviewRes(review, member.nickname, req.stationName)
+        return reviewMapper.toReviewRes(review, member.nickname, req.stationName, req.email)
     }
 
     @Transactional

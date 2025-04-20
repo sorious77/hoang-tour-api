@@ -2,6 +2,7 @@ package com.hoang.hoangtourapi.domain.line
 
 import com.hoang.hoangtourapi.domain.line.model.Line
 import com.hoang.hoangtourapi.domain.line.model.LineRes
+import com.hoang.hoangtourapi.enums.Status
 import org.springframework.stereotype.Service
 
 @Service
@@ -11,7 +12,7 @@ class LineService(
 ) {
     // 호선 목록 반환
     fun getLineList(): List<LineRes> {
-        val lineList = lineRepository.findAll()
+        val lineList = lineRepository.findAllByStatus(Status.ACTIVE)
 
         return lineList.map { lineMapper.toRes(it) }
     }

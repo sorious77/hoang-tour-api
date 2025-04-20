@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
 import java.nio.file.Paths
+import java.util.UUID
 
 @Service
 class ImageService(
@@ -39,11 +40,14 @@ class ImageService(
      */
     fun saveMultiImageFile(imageList: List<MultipartFile>): List<String> {
         return imageList.map { image ->
-            val fileName = image.originalFilename
-            val path = "${Paths.get(System.getProperty("user.home"), imageBasePath)}/$fileName"
+            val filename = image.originalFilename
+
+            val extension = filename?.substring(filename.lastIndexOf(".") + 1) ?: ""
+            val uuid = UUID.randomUUID()
+            val path = "${Paths.get(System.getProperty("user.home"), imageBasePath)}/$uuid.$extension"
 
             image.transferTo(File(path))
-            path
+            "$uuid.$extension"
         }
     }
 }

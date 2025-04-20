@@ -49,7 +49,8 @@ class CustomReviewRepositoryImpl(
                         ),
                     )
                     .where(
-                        path(Member::nickname).equal(req.nickname),
+                        path(Member::nickname).equal(req.nickname)
+                            .and(path(Review::status).eq(Status.ACTIVE)),
                     )
                     .orderBy(path(Review::insDate).desc())
             }

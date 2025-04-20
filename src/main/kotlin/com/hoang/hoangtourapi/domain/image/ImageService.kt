@@ -30,7 +30,7 @@ class ImageService(
 
         pathList.forEachIndexed { order, path ->
             imageRepository.save(
-                imageMapper.toEntity(reviewId, path, order, req),
+                imageMapper.toEntity(reviewId, path, order + 1, req),
             )
         }
     }

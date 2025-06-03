@@ -7,6 +7,7 @@ import com.hoang.hoangtourapi.domain.member.model.ProfileReq
 import com.hoang.hoangtourapi.domain.member.model.ProfileRes
 import com.hoang.hoangtourapi.domain.member.model.SignInReq
 import com.hoang.hoangtourapi.domain.member.model.SignInRes
+import com.hoang.hoangtourapi.domain.member.model.UpdateMemberReq
 import com.hoang.hoangtourapi.utils.JwtTokenUtil
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -16,6 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -80,5 +82,20 @@ class MemberController(
         @ParameterObject @Valid req: ProfileReq,
     ): ProfileRes? {
         return memberService.findMemberProfileByNickname(req)
+    }
+
+    @PutMapping
+    @Operation(
+        summary = "회원 정보 수정",
+        description = "회원 정보를 수정합니다.",
+    )
+    fun updateMemberProfile(
+        @Valid @RequestBody req: UpdateMemberReq,
+    ): Boolean {
+        authenticationManager.authenticate(
+            UsernamePasswordAuthenticationToken(req.email, req.currentPassword),
+        )
+
+        return memberService.updateMemberProfile(req)
     }
 }

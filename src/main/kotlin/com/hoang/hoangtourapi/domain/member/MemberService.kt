@@ -4,6 +4,7 @@ import com.hoang.hoangtourapi.domain.follow.FollowRepository
 import com.hoang.hoangtourapi.domain.member.model.CreateMemberReq
 import com.hoang.hoangtourapi.domain.member.model.ProfileReq
 import com.hoang.hoangtourapi.domain.member.model.ProfileRes
+import com.hoang.hoangtourapi.domain.member.model.UpdateMemberReq
 import com.hoang.hoangtourapi.domain.review.ReviewRepository
 import com.hoang.hoangtourapi.enums.BaseResponseStatus
 import com.hoang.hoangtourapi.exception.BaseException
@@ -55,6 +56,29 @@ class MemberService(
         )
     }
 
+    @Transactional
+    fun updateMemberProfile(req: UpdateMemberReq): Boolean {
+        // 유효한 입력인지 검증
+        validateUpdateMember(req)
+
+        val member =
+            memberRepository.findMemberByEmail(req.email!!)
+                ?: throw BaseException(BaseResponseStatus.INVALID_MEMBER)
+
+        val encryptedPassword = passwordEncoder.encode(req.newPassword)
+
+        memberRepository.save(
+            member.apply {
+                nickname = req.nickname ?: ""
+                introduction = req.introduction
+                profileImage = ""
+                password = encryptedPassword
+            },
+        )
+
+        return true
+    }
+
     private fun validateCreateMember(req: CreateMemberReq) {
         // 이메일 중복 검사
         if (req.email != null &&
@@ -72,6 +96,20 @@ class MemberService(
 
         // 비밀번호, 비밀번호 확인 일치 검사
         if (req.password != req.passwordConfirm) {
+            throw BaseException(BaseResponseStatus.PASSWORD_MISMATCH)
+        }
+    }
+
+    private fun validateUpdateMember(req: UpdateMemberReq) {
+        // 닉네임 중복 검사
+        if (req.nickname != null &&
+            memberRepository.existsByNickname(req.nickname)
+        ) {
+            throw BaseException(BaseResponseStatus.ALREADY_EXISTS, "닉네임")
+        }
+
+        // 비밀번호, 비밀번호 확인 일치 검사
+        if (req.newPassword != req.newPasswordConfirm) {
             throw BaseException(BaseResponseStatus.PASSWORD_MISMATCH)
         }
     }

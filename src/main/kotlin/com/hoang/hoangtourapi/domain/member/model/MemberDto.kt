@@ -4,6 +4,7 @@ import com.hoang.hoangtourapi.validator.EmailValid
 import com.hoang.hoangtourapi.validator.PasswordValid
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotEmpty
+import org.springframework.web.multipart.MultipartFile
 
 data class CreateMemberReq(
     @field:EmailValid
@@ -52,3 +53,14 @@ data class ProfileRes(
         val imageUrl: String,
     )
 }
+
+data class UpdateMemberReq(
+    val email: String?,
+    val profileImage: MultipartFile?,
+    val nickname: String?,
+    val introduction: String,
+    val currentPassword: String,
+    @field:PasswordValid
+    val newPassword: String,
+    val newPasswordConfirm: String,
+)

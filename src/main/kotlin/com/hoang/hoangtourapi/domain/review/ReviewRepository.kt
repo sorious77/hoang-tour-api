@@ -155,10 +155,10 @@ class CustomReviewRepositoryImpl(
                     join(Image::class).on(path(Review::reviewId).eq(path(Image::reviewId))),
                 ).where(
                     path(Image::status).eq(Status.ACTIVE)
-                        .and(path(Review::reviewId).eq(reviewId))
-                        .and(path(Image::imageOrder).eq(0)),
+                        .and(path(Review::reviewId).eq(reviewId)),
                 )
             }.mapNotNull { it }
+                .sortedBy { it.order }
 
         return reviewMapper.toReviewDetailRes(review, reviewImages)
     }

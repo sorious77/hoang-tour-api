@@ -14,16 +14,21 @@ import org.springframework.context.annotation.Configuration
 class SwaggerConfig {
     @Bean
     fun openApi(): OpenAPI {
-        val jwtSchemeName = "Authorization"
-
         val servers = listOf(Server().url("/"))
 
-        val securityScheme =
+        val accessTokenScheme =
             SecurityScheme().apply {
-                name = jwtSchemeName
+                name = "Authorization"
                 type = SecurityScheme.Type.HTTP
                 scheme = "bearer"
                 bearerFormat = "JWT"
+            }
+
+        val refreshTokenScheme =
+            SecurityScheme().apply {
+                name = "Refresh-Token"
+                type = SecurityScheme.Type.APIKEY
+                `in` = SecurityScheme.In.HEADER
             }
 
         return OpenAPI()
@@ -39,7 +44,8 @@ class SwaggerConfig {
             .addSecurityItem(SecurityRequirement().addList("bearerAuth"))
             .components(
                 Components()
-                    .addSecuritySchemes("bearerAuth", securityScheme),
+                    .addSecuritySchemes("bearerAuth", accessTokenScheme)
+                    .addSecuritySchemes("refreshToken", refreshTokenScheme),
             )
     }
 }

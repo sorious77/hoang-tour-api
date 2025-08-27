@@ -68,9 +68,10 @@ class MemberController(
         )
 
         val memberDetails = memberDetailsService.loadUserByUsername(req.email ?: "")
-        val token = jwtTokenUtil.generateAccessToken(memberDetails)
+        val accessToken = jwtTokenUtil.generateAccessToken(memberDetails)
+        val refreshToken = jwtTokenUtil.generateRefreshToken(memberDetails)
 
-        return memberMapper.toSignInRes(memberDetails, token)
+        return memberMapper.toSignInRes(memberDetails, accessToken, refreshToken)
     }
 
     @GetMapping("/profile")

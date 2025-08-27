@@ -17,14 +17,20 @@ class JwtTokenUtil(
     private val accessSecretKey: String,
     @Value("\${jwt.refreshSecretKey}")
     private val refreshSecretKey: String,
+    @Value("\${jwt.accessExpiration}")
+    private val accessExpiration: Long,
+    @Value("\${jwt.refreshExpiration}")
+    private val refreshExpiration: Long,
 ) {
-    private lateinit var key: SecretKey
-    private val expirationTime = 60 * 60 * 1000L
+    private lateinit var accessKey: SecretKey
+    private lateinit var refreshKey: SecretKey
 
     @PostConstruct
     fun init() {
-        val bytes = Base64.getDecoder().decode(accessSecretKey)
-        key = Keys.hmacShaKeyFor(bytes) // key값에 우리가 사용할 secret 값이 담겨진다.
+        val accessKeyBytes = Base64.getDecoder().decode(accessSecretKey)
+        val refreshKeyBytes = Base64.getDecoder().decode(refreshSecretKey)
+        accessKey = Keys.hmacShaKeyFor(accessKeyBytes)
+        refreshKey = Keys.hmacShaKeyFor(refreshKeyBytes)
     }
 
     fun generateAccessToken(userDetails: MemberDetails): String {
@@ -32,48 +38,60 @@ class JwtTokenUtil(
             .subject(userDetails.username)
             .claim("nickname", userDetails.getNickname())
             .issuedAt(Date())
-            .expiration(Date(System.currentTimeMillis() + expirationTime))
-            .signWith(key)
+            .expiration(Date(System.currentTimeMillis() + accessExpiration))
+            .signWith(accessKey)
             .compact()
     }
 
     fun generateRefreshToken(userDetails: MemberDetails): String {
         return Jwts.builder()
             .subject(userDetails.username)
-            .expiration(Date(System.currentTimeMillis() + expirationTime))
-            .signWith(key)
+            .claim("nickname", userDetails.getNickname())
+            .issuedAt(Date())
+            .expiration(Date(System.currentTimeMillis() + refreshExpiration))
+            .signWith(refreshKey)
             .compact()
     }
 
-    fun validateToken(token: String): Boolean {
+    // 토큰 검증
+    fun validateToken(
+        token: String,
+        isAccessToken: Boolean,
+    ): Boolean {
+        return validateToken(token, if (isAccessToken) accessKey else refreshKey)
+    }
+
+    // 토큰 검증
+    private fun validateToken(
+        token: String,
+        key: SecretKey,
+    ): Boolean {
         try {
-            val claims = getClaimsFromToken(token)
+            val claims = getClaimsFromToken(token, key)
             return !claims.expiration.before(Date())
         } catch (e: Exception) {
             return false
         }
     }
 
-    fun getEmail(token: String): String {
-        val claims = getClaimsFromToken(token)
+    // 토큰에서 이메일 추출
+    fun getEmailFromToken(
+        token: String,
+        isAccessToken: Boolean,
+    ): String {
+        val claims =
+            getClaimsFromToken(
+                token,
+                if (isAccessToken) accessKey else refreshKey,
+            )
         return claims.subject
     }
 
-//    fun getTokenStatus(token: String, key: Key): TokenStatus {
-//        try {
-//            Jwts.parser()
-//                .setSigningKey(key)
-//                .
-//        } catch(e: ExpiredJwtException) {
-//
-//        } catch (e: IllegalArgumentException) {
-//
-//        } catch(e: JwtException) {
-//
-//        }
-//    }
-
-    private fun getClaimsFromToken(token: String): Claims {
+    // 토큰에서 클레임 추출
+    private fun getClaimsFromToken(
+        token: String,
+        key: SecretKey,
+    ): Claims {
         return Jwts.parser()
             .verifyWith(key)
             .build()

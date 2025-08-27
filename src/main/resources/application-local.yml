@@ -27,7 +27,10 @@ logging:
 
 jwt:
   accessSecretKey: 1jF6cIqwJBCjgKFFCGOnTZ16xF7gN04U2lhqez9j0CMKrtIJ3JZva2cVlF1KbpryXoGl3mi96Y8+2kvveqp9lQ==
-  refreshSecretKey: hX8rYzawftO1goU9uV6oYomS4XXhEDHx
+  refreshSecretKey: e31a55317a0c2c4b17ee4593341da36d72c65cbe79963b84fac47bc734a4e5b9
+#  accessExpiration: 10000 # 10초 (밀리초)
+  accessExpiration:  3600000 # 1시간 (밀리초)
+  refreshExpiration: 2592000000 # 30일 (밀리초)
 
 image:
   basePath: /Desktop/hoang-tour/images

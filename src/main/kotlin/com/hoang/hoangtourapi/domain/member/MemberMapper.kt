@@ -27,11 +27,12 @@ interface MemberMapper {
 
     @Mappings(
         Mapping(target = "email", source = "member.username"),
-        Mapping(target = "accessToken", source = "token"),
-        Mapping(target = "refreshToken", source = "token"),
+        Mapping(target = "accessToken", source = "accessToken"),
+        Mapping(target = "refreshToken", source = "refreshToken"),
     )
     fun toSignInRes(
         member: MemberDetails,
-        token: String,
+        accessToken: String,
+        refreshToken: String,
     ): SignInRes
 }
